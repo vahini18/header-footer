@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .error-input {
+            border: 2px solid red;
+        }
+        .error-text {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="container mt-5">
+    <h2 class="text-center">Flipkart Login</h2>
+    
+    <form id="loginForm">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address:</label>
+            <input type="email" id="email" class="form-control">
+            <small id="emailError" class="error-text"></small>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" class="form-control">
+            <small id="passwordError" class="error-text"></small>
+        </div>
+
+        <button type="submit" id="loginBtn" class="btn btn-primary" disabled>Login</button>
+    </form>
+
+    <script>
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const emailError = document.getElementById("emailError");
+        const passwordError = document.getElementById("passwordError");
+        const loginBtn = document.getElementById("loginBtn");
+
+        function validateForm() {
+            let isValid = true;
+            emailError.innerText = "";
+            passwordError.innerText = "";
+            email.classList.remove("error-input");
+            password.classList.remove("error-input");
+            if (email.value.trim() === "") {
+                emailError.innerText = "Email is required.";
+                email.classList.add("error-input");
+                isValid = false;
+            } else if (!email.value.match(/^\S+@\S+\.\S+$/)) {
+                emailError.innerText = "Enter a valid email address.";
+                email.classList.add("error-input");
+                isValid = false;
+            }
+            if (password.value.trim() === "") {
+                passwordError.innerText = "Password is required.";
+                password.classList.add("error-input");
+                isValid = false;
+            } else if (password.value.length < 6) {
+                passwordError.innerText = "Password must be at least 6 characters.";
+                password.classList.add("error-input");
+                isValid = false;
+            }
+            loginBtn.disabled = !isValid;
+        }
+        email.addEventListener("input", validateForm);
+        password.addEventListener("input", validateForm);
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (!loginBtn.disabled) {
+                alert("Login successful!");
+            }
+        });
+    </script>
+</body>
+</html>
